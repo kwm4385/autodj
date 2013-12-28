@@ -1,4 +1,4 @@
-#!/home/kevin/auto-dj/env/bin/python3
+#!/home/kevin/autodj/env/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
