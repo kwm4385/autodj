@@ -9,5 +9,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     #url(r'', include(main.urls)),
-    url(r'register', 'main.views.register'),
+    (r'^accounts/', include('registration.backends.simple.urls')),
 )
