@@ -1,13 +1,11 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+
+from main import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'autodj.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'', include(main.urls)),
     (r'^accounts/', include('registration.backends.simple.urls')),
+    (r'', views.register_home),
 )
