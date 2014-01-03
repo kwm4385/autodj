@@ -17,7 +17,6 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
     
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}js/smoothscroll.js"></script>
     
   </head>
 
@@ -44,7 +43,7 @@
             <br/>
             <div class="row clearfix">
                 <div class="col-md-4 column"></div>
-                <div class="col-md-4 column">
+                <div class="col-md-4 column well">
                     <h3>Please log in</h3>
                     <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
                         {% load crispy_forms_tags %}
