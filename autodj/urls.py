@@ -7,5 +7,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.backends.simple.urls')),
-    (r'', views.register_home),
+    (r'^$', views.register_home),
 )

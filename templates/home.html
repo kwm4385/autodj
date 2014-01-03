@@ -19,10 +19,9 @@
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}js/smoothscroll.js"></script>
     
-
   </head>
 
-  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+  <body data-spy="scroll" data-offset="0" data-target="#navigation" {% if anchor %}onload='location.href="#{{ anchor }}"'{% endif %}>
 
     <!-- Fixed navbar -->
         <div id="navigation" class="navbar navbar-default navbar-fixed-top">
@@ -37,10 +36,13 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#home" class="smothscroll">Home</a></li>
-                <li><a href="#desc" class="smothscroll">Description</a></li>
-                <li><a href="#showcase" class="smothScroll">Showcase</a></li>
-                <li><a href="#register" class="smothScroll">Register</a></li>
+                <li class="active"><a href="#home" class="smoothscroll">Home</a></li>
+                <li><a href="#desc" class="smoothscroll">Description</a></li>
+                <li><a href="#showcase" class="smoothScroll">Showcase</a></li>
+                <li><a href="#register" class="smoothScroll">Register</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="/accounts/login/">Log In</a></li>
               </ul>
             </div><!--/.nav-collapse -->
           </div>
@@ -76,9 +78,10 @@
     </div><!--/ #headerwrap -->
 
 
-    <section id="desc" name="desc"></section>
+    
     <!-- INTRO WRAP -->
-    <div id="intro">
+    <section id="desc" name="desc"></section>
+    <div id="intro">  
         <div class="container">
             <div class="row centered">
                 <h1>Designed To Excel</h1>
@@ -183,8 +186,9 @@
     </div><!--/ #features -->
     
     
-    <section id="showcase" name="showcase"></section>
+    
     <div id="showcase">
+        <section id="showcase" name="showcase"></section>
         <div class="container">
             <div class="row">
                 <h1 class="centered">Some Screenshots</h1>
@@ -216,21 +220,22 @@
     </div>  
 
 
-    <section id="register" name="register"></section>
-    <div id="footerwrap">
-        <div class="container">
-            
-            <div class="col-lg-7">
-                <h3>Register Now</h3>
-                <br>
-                {% load crispy_forms_tags %}
-                <form action="" method="post">{% csrf_token %}
-                    {{ regform|crispy }}
-                    <input type="submit" value="Register" />
-                </form>
+    <section id="register" name="register">
+        <div id="footerwrap">
+            <div class="container">
+                
+                <div class="col-lg-7">
+                    <h3>Register Now</h3>
+                    <br>
+                    {% load crispy_forms_tags %}
+                    <form action="" method="post">{% csrf_token %}
+                        {{ regform|crispy }}
+                        <button class="btn btn-primary" type="submit">Register</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
     <div id="c">
         <div class="container">
             <p>Copyright Here</p>    
