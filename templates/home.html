@@ -42,12 +42,25 @@
                 <li><a href="#register" class="smoothScroll">Register</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="/accounts/login/">Log In</a></li>
+                {% if user.is_authenticated %}
+                <li class="dropdown pull-right">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle">Welcome {{ user.username }}<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/{{ user.username }}" role="button" class="btn">My Playlist</a>
+                        </li>
+                        <li>
+                            <a href="/accounts/logout">Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+                {% else %}
+                    <li><a id="modal-370252" href="#modal-container-370252" role="button" class="btn" data-toggle="modal">Log In</a></li>
+                {% endif %}
               </ul>
             </div><!--/.nav-collapse -->
           </div>
         </div>
-
 
     <section id="home" name="home"></section>
     <div id="headerwrap">
@@ -240,6 +253,32 @@
         <div class="container">
             <p>Copyright Here</p>    
         </div>
+    </div>
+
+    <div class="modal fade" id="modal-container-370252" role="dialog" aria-labelledby="login" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="login">
+                        Log In
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
+                    {% load crispy_forms_tags %}
+                    {{ loginform|crispy }}
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" value="login" class="btn btn-primary">Log In</button>
+                    <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+        
     </div>
 
 

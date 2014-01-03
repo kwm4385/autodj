@@ -1,16 +1,72 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}ico/favicon.png">
 
-{% block content %}
+    <title>AutoDJ</title>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
 
-<form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
-    {% load crispy_forms_tags %}
-    {{ form|crispy }}
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-</form>
+    <!-- Custom styles for this template -->
+    <link href="{{ STATIC_URL }}css/main.css" rel="stylesheet">
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
+    
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/smoothscroll.js"></script>
+    
+  </head>
 
-{% endblock %}
+  <body>
+
+    <!-- Fixed navbar -->
+        <div id="navigation" class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="/"><b>AutoDJ</b></a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="/#home">Home</a></li>
+                <li><a href="/#desc">Description</a></li>
+                <li><a href="/#showcase">Showcase</a></li>
+                <li><a href="/#register">Register</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+
+        <div class="container">
+            <br/>
+            <div class="row clearfix">
+                <div class="col-md-4 column"></div>
+                <div class="col-md-4 column">
+                    <h3>Please log in</h3>
+                    <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
+                        {% load crispy_forms_tags %}
+                        {{ form|crispy }}
+                        {% if form.errors %}
+                        <p>Your username and password didn't match. Please try again.</p>
+                        {% endif %}
+                        <div style="text-align: right;">
+                            <button type="submit" value="login" class="btn btn-primary">Log In</button>
+                        </div>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                </div>
+                <div class="col-md-4 column"/></div>
+            </div>
+        </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
+  </body>
+</html>
