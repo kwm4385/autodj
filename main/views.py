@@ -11,14 +11,14 @@ from registration.backends.simple.views import RegistrationView
 
 def register_home(request):
     loginform = AuthenticationForm()
-    if request.method == 'POST': # If the form has been submitted
+    if request.method == 'POST': # If the form registration has been submitted
         form = RegistrationForm(request.POST)
         if form.is_valid():
             usr, em, pw = form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1']
             user = RegistrationView.register(RegistrationView, request=request, username=usr, email=em, password1=pw)
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect("/playlist")
         else:
             return render(request, 'home.html', {'regform': form, 'anchor': 'register','loginform': loginform,})
-    else: # Otherwise display registration page
+    else:
         form = RegistrationForm()
         return render(request, 'home.html', {'regform': form, 'loginform': loginform,})
