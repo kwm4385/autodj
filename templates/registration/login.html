@@ -1,5 +1,9 @@
 {% extends "registration/base_auth.html" %}
 
+{% block meta %}
+{% if user.is_authenticated %}<meta http-equiv="refresh" content="0; url=/playlist" />{% endif %}
+{% endblock %}
+
 {% block title %}AutoDJ - Login{% endblock %}
 
 {% block content %}
@@ -14,9 +18,14 @@
                 {% if form.errors %}
                 <p>Your username and password didn't match. Please try again.</p>
                 {% endif %}
-                <div style="text-align: right;">
-                    <button type="submit" value="login" class="btn btn-primary">Log In</button>
-                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p>Need an account? <a href="/#register">Register now</a></p>
+                    </div>
+                    <div class="col-lg-4">           
+                        <button type="submit" value="login" class="btn btn-primary">Log In</button>
+                    </div>
+                 </div>
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
         </div>

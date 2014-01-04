@@ -62,7 +62,7 @@
           </div>
         </div>
 
-    <section id="home" name="home"></section>
+    <section id="home" name="home">
     <div id="headerwrap" style="outline:5px solid; outline-color:#34495e;">
         <div class="container">
             <div class="row centered">
@@ -89,16 +89,16 @@
             </div>
             <div class="row centered" style="padding:20px;">
                 <div class="col-lg-12">
-                    <a href="/playlist"><button type="button" class="btn btn-warning" style="height:100px; width:225px;"><h2 style="color:#ffffff;">My Playlist</h2></button></a>
+                    <a href="/playlist"><button type="button" class="btn btn-warning" style="font-size: 30px;">My Playlist</button></a>
                 </div>
             </div>
         </div> <!--/ .container -->
     </div><!--/ #headerwrap -->
-
+    </section>
 
     
     <!-- INTRO WRAP -->
-    <section id="desc" name="desc"></section>
+    <section id="desc" name="desc">
     <div id="intro">  
         <div class="container">
             <div class="row centered">
@@ -202,11 +202,10 @@
             </div>
         </div><!--/ .container -->
     </div><!--/ #features -->
+    </section>
     
-    
-    
-    <div id="showcase">
-        <section id="showcase" name="showcase"></section>
+    <section id="showcase" name="showcase">
+    <div id="showcase"> 
         <div class="container">
             <div class="row">
                 <h1 class="centered">Some Screenshots</h1>
@@ -236,12 +235,11 @@
             <br>    
         </div><!-- /container -->
     </div>  
-
+    </section>
 
     <section id="register" name="register">
         <div id="footerwrap">
-            <div class="container">
-                
+            <div class="container">           
                 <div class="col-lg-7">
                     <h3>Register Now</h3>
                     <br>
@@ -273,19 +271,15 @@
                     <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
                     {% load crispy_forms_tags %}
                     {{ loginform|crispy }}
-                        
+                    <p>Need an account? <a href="#register" class="smoothScroll" onclick="$('#modal-container-370252').modal('hide')">Register now</a></p>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" value="login" class="btn btn-primary">Log In</button>
-                    <input type="hidden" name="next" value="{{ next }}" />
                     </form>
                 </div>
-            </div>
-            
-        </div>
-        
+            </div>       
+        </div>     
     </div>
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
