@@ -22,3 +22,7 @@ def register_home(request):
     else:
         form = RegistrationForm()
         return render(request, 'home.html', {'regform': form, 'loginform': loginform,})
+
+@login_required
+def playlist(request):
+    return render(request, 'playlist.html')
