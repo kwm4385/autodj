@@ -6,13 +6,13 @@ from django.shortcuts import *
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.template import RequestContext, loader
 
-from registration.forms import RegistrationForm
+from registration.forms import RegistrationFormUniqueEmail
 from registration.backends.simple.views import RegistrationView
 
 def register_home(request):
     loginform = AuthenticationForm()
     if request.method == 'POST': # If the form registration has been submitted
-        form = RegistrationForm(request.POST)
+        form = RegistrationFormUniqueEmail(request.POST)
         if form.is_valid():
             usr, em, pw = form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1']
             user = RegistrationView.register(RegistrationView, request=request, username=usr, email=em, password1=pw)
@@ -20,7 +20,7 @@ def register_home(request):
         else:
             return render(request, 'home.html', {'regform': form, 'anchor': 'register','loginform': loginform,})
     else:
-        form = RegistrationForm()
+        form = RegistrationFormUniqueEmail()
         return render(request, 'home.html', {'regform': form, 'loginform': loginform,})
 
 @login_required

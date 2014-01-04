@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'south',
     'crispy_forms',
     'registration',
+    'sortedm2m',
     'main',
 )
 

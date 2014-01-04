@@ -1,0 +1,241 @@
+Metadata-Version: 1.1
+Name: django-sortedm2m
+Version: 0.6.0
+Summary: Drop-in replacement for django's many to many field with sorted relations.
+Home-page: http://github.com/gregmuellegger/django-sortedm2m
+Author: Gregor Müllegger
+Author-email: gregor@muellegger.de
+License: BSD
+Description: ================
+        django-sortedm2m
+        ================
+        
+        .. image:: https://travis-ci.org/gregmuellegger/django-sortedm2m.png
+           :alt: Build Status
+           :target: https://travis-ci.org/gregmuellegger/django-sortedm2m
+        
+        ``sortedm2m`` is a drop-in replacement for django's own ``ManyToManyField``.
+        The provided ``SortedManyToManyField`` behaves like the original one but
+        remembers the order of added relations.
+        
+        Usecases
+        ========
+        
+        Imagine that you have a gallery model and a photo model. Usually you want a
+        relation between these models so you can add multiple photos to one gallery
+        but also want to be able to have the same photo on many galleries.
+        
+        This is where you usually can use many to many relation. The downside is that
+        django's default implementation doesn't provide a way to order the photos in
+        the gallery. So you only have a random ordering which is not suitable in most
+        cases.
+        
+        You can work around this limitation by using the ``SortedManyToManyField``
+        provided by this package as drop in replacement for django's
+        ``ManyToManyField``.
+        
+        Usage
+        =====
+        
+        Use ``SortedManyToManyField`` like ``ManyToManyField`` in your models::
+        
+            from django.db import models
+            from sortedm2m.fields import SortedManyToManyField
+        
+            class Photo(models.Model):
+                name = models.CharField(max_length=50)
+                image = models.ImageField(upload_to='...')
+        
+            class Gallery(models.Model):
+                name = models.CharField(max_length=50)
+                photos = SortedManyToManyField(Photo)
+        
+        If you use the relation in your code like the following, it will remember the
+        order in which you have added photos to the gallery. ::
+        
+            gallery = Gallery.objects.create(name='Photos ordered by name')
+            for photo in Photo.objects.order_by('name'):
+                gallery.photos.add(photo)
+        
+        ``SortedManyToManyField``
+        -------------------------
+        
+        You can use the following arguments to modify the default behavior:
+        
+        ``sorted``
+        ~~~~~~~~~~
+        
+        **Default:** ``True``
+        
+        You can set the ``sorted`` to ``False`` which will force the
+        ``SortedManyToManyField`` in behaving like Django's original
+        ``ManyToManyField``. No ordering will be performed on relation nor will the
+        intermediate table have a database field for storing ordering information.
+        
+        ``sort_value_field_name``
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+        
+        **Default:** ``'sort_value'``
+        
+        Specifies how the field is called in the intermediate database table by which
+        the relationship is ordered. You can change its name if you have a legacy
+        database that you need to integrate into your application.
+        
+        Admin
+        =====
+        
+        ``SortedManyToManyField`` provides a custom widget which can be used to sort
+        the selected items. It renders a list of checkboxes that can be sorted by
+        drag'n'drop.
+        
+        To use the widget in the admin you need to add ``sortedm2m`` to your
+        INSTALLED_APPS settings, like::
+        
+           INSTALLED_APPS = (
+               'django.contrib.auth',
+               'django.contrib.contenttypes',
+               'django.contrib.sessions',
+               'django.contrib.sites',
+               'django.contrib.messages',
+               'django.contrib.staticfiles',
+               'django.contrib.admin',
+           
+               'sortedm2m',
+        
+               '...',
+           )
+        
+        Otherwise it will not find the css and js files needed to sort by drag'n'drop.
+        
+        Finally, make sure *not* to have the model listed in any ``filter_horizontal``
+        or ``filter_vertical`` tuples inside of your ``ModelAdmin`` definitions.
+        
+        If you did it right, you'll wind up with something like this:
+        
+        .. image:: http://i.imgur.com/HjIW7MI.jpg
+        
+        It's also possible to use the ``SortedManyToManyField`` with admin's
+        ``raw_id_fields`` option in the ``ModelAdmin`` definition. Add the name of the
+        ``SortedManyToManyField`` to this list to get a simple text input field. The
+        order in which the ids are entered into the input box is used to sort the
+        items of the sorted m2m relation.
+        
+        Example::
+        
+            from django.contrib import admin
+        
+            class GalleryAdmin(admin.ModelAdmin):
+                raw_id_fields = ('photos',)
+        
+        Contribute
+        ==========
+        
+        You can find the latest development version on github_. Get there and fork it,
+        file bugs or send me nice wishes.
+        
+        Feel free to drop me a message about critique or feature requests. You can get
+        in touch with me by mail_ or twitter_.
+        
+        .. _github: http://github.com/gregmuellegger/django-sortedm2m
+        .. _mail: mailto:gregor@muellegger.de
+        .. _twitter: http://twitter.com/gregmuellegger
+        
+        
+        Changelog
+        =========
+        
+        0.6.0 
+        -----
+        
+        * Python 3 support!
+        * Better widget. Thanks to Mike Knoop for the initial patch.
+        
+        0.5.0
+        -----
+        
+        * Django 1.5 support. Thanks to Antti Kaihola for the patches.
+        * Dropping Django 1.3 support. Please use django-sortedm2m<0.5 if you need to
+          use Django 1.3.
+        * Adding support for a ``sort_value_field_name`` argument in
+          ``SortedManyToManyField``. Thanks to Trey Hunner for the idea.
+        
+        0.4.0
+        -----
+        
+        * Django 1.4 support. Thanks to Flavio Curella for the patch.
+        * south support is only enabled if south is actually in your INSTALLED_APPS
+          setting. Thanks to tcmb for the report and Florian Ilgenfritz for the patch.
+        
+        0.3.3
+        -----
+        
+        * South support (via monkeypatching, but anyway... it's there!). Thanks to
+          Chris Church for the patch. South migrations won't pick up a changed
+          ``sorted`` argument though.
+        
+        0.3.2
+        -----
+        
+        * Use already included jQuery version in global scope and don't override with
+          django's version. Thank you to Hendrik van der Linde for reporting this
+          issue.
+        
+        0.3.1
+        -----
+        
+        * Fixed packaging error.
+        
+        0.3.0
+        -----
+        
+        * Heavy internal refactorings. These were necessary to solve a problem with
+          ``SortedManyToManyField`` and a reference to ``'self'``.
+        
+        0.2.5
+        -----
+        
+        * Forgot to exclude debug print/console.log statements from code. Sorry.
+        
+        0.2.4
+        -----
+        
+        * Fixing problems with ``SortedCheckboxSelectMultiple`` widget, especially in
+          admin where a "create and add another item" popup is available.
+        
+        0.2.3
+        -----
+        
+        * Fixing issue with primary keys instead of model instances for ``.add()`` and
+          ``.remove()`` methods in ``SortedRelatedManager``.
+        
+        0.2.2
+        -----
+        
+        * Fixing validation error for ``SortedCheckboxSelectMultiple``. It caused
+          errors if only one value was passed.
+        
+        0.2.1
+        -----
+        
+        * Removed unnecessary reference of jquery ui css file in
+          ``SortedCheckboxSelectMultiple``. Thanks to Klaas van Schelven and Yuwei Yu
+          for the hint.
+        
+        0.2.0
+        -----
+        
+        * Added a widget for use in admin.
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
