@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'registration',
     'sortedm2m',
     'main',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
