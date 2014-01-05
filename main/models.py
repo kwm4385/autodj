@@ -12,9 +12,16 @@ class Song(models.Model):
     url = URLField()
     time_requested = DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.url
+
 class Playlist(models.Model):
     songs = SortedManyToManyField(Song, sort_value_field_name = "time_requested")
     user = models.OneToOneField(User)
+    name = models.CharField(max_length = 30, default="Unnamed Platlist")
+
+    def __str__(self):
+        return self.name
 
 ##                ##
 # Signal Recievers #
@@ -22,8 +29,7 @@ class Playlist(models.Model):
 
 @receiver(user_registered)
 def on_user_register(sender, **kwargs):
-    print("User registered.")
-    playlist = Playlist(user = kwargs["user"])
+    playlist = Playlist(user = kwargs["user"], name = kwargs["user"].username + "'s playlist")
     playlist.save()
 
 @receiver(pre_delete)
