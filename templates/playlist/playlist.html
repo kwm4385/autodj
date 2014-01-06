@@ -15,12 +15,12 @@
     <link href="{{ STATIC_URL }}css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">
 
-    <script type="text/javacript" src="{{ STATIC_URL }}js/playlist.js"></script>
+    
     <script src="{{ STATIC_URL }}js/jquery.js"></script>
   </head>
 
   <body>
-
+    <script src="{{ STATIC_URL }}js/playlist.js"></script>
     <div id="wrapper">
 
       <!-- Sidebar -->
@@ -48,11 +48,14 @@
             <li>
               <a href="#settings" data-toggle="tab"><i class="glyphicon glyphicon-cog"></i> &nbsp;Settings</a>
             </li>
+            <li>
+              <a href="#help" data-toggle="tab"><i class="glyphicon glyphicon-question-sign"></i> &nbsp;Help</a>
+            </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown pull-right">
-                <a href="#" data-toggle="dropdown" class="dropdown-toggle">Welcome {{ user.username }} <strong class="caret"></strong>&nbsp;&nbsp;</a>
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Welcome {{ user.username }} <strong class="caret"></strong>&nbsp;&nbsp;</a>
                 <ul class="dropdown-menu" id="navTab">
                     <li>
                         <a href="/playlist">My Playlist</a>
@@ -76,6 +79,7 @@
           <div class="tab-pane active" id="player">{% include "playlist/queue.html" %}</div>
           <div class="tab-pane" id="library">{% include "playlist/library.html" %}</div>
           <div class="tab-pane" id="settings">Settings here</div>
+          <div class="tab-pane" id="help">Help here</div>
         </div>
 
       </div><!-- /#page-wrapper -->
