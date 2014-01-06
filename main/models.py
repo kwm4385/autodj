@@ -40,7 +40,7 @@ def delete_repo(sender, instance, **kwargs):
     if sender == User:
         playlists = Playlist.objects.filter(user = instance)
         for list in playlists:
-            playlist.delete()
+            list.delete()
     elif sender == Playlist:
         for song in instance.songs.all():
             song.delete()
