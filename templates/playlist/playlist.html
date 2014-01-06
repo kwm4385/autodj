@@ -36,8 +36,15 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse" style="outline:5px solid; outline-color:#34495e;">
           <ul class="nav navbar-nav side-nav">
-            <li><a href="#player" data-toggle="tab"><i class="glyphicon glyphicon-music"></i> &nbsp;Player</a></li>
-            <li><a href="#settings" data-toggle="tab"><i class="glyphicon glyphicon-cog"></i> &nbsp;Settings</a></li>
+            <li>
+              <a href="#player" data-toggle="tab"><i class="glyphicon glyphicon-music"></i> &nbsp;Player</a>
+            </li>
+            <li>
+              <a href="#library" data-toggle="tab"><i class="glyphicon glyphicon-book"></i> &nbsp;Library</a>
+            </li>
+            <li>
+              <a href="#settings" data-toggle="tab"><i class="glyphicon glyphicon-cog"></i> &nbsp;Settings</a>
+            </li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -60,7 +67,8 @@
       <div id="page-wrapper" >
 
         <div class="tab-content">
-          <div class="tab-pane active" id="player">Player here</div>
+          <div class="tab-pane active" id="player">{% include "playlist/queue.html" %}</div>
+          <div class="tab-pane" id="library">{% include "playlist/library.html" %}</div>
           <div class="tab-pane" id="settings">Settings here</div>
         </div>
 
