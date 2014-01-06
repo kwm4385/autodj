@@ -4,6 +4,8 @@ from django.db.models.signals import pre_delete
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
+from uuid import uuid4
+
 from registration.signals import user_registered
 
 from sortedm2m.fields import SortedManyToManyField

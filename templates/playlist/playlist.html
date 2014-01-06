@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ user.username }}'s Playlist</title>
+    <title>My AutoDJ Playlist</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet">
@@ -14,6 +14,9 @@
     <!-- Add custom CSS here -->
     <link href="{{ STATIC_URL }}css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">
+
+    <script type="text/javacript" src="{{ STATIC_URL }}js/playlist.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.js"></script>
   </head>
 
   <body>
@@ -65,6 +68,9 @@
       </nav>
 
       <div id="page-wrapper" >
+        <noscript>
+          <div class="alert alert-danger"><b>Warning!</b> You need Javascript enabled to use this site.</div>
+        </noscript>
 
         <div class="tab-content">
           <div class="tab-pane active" id="player">{% include "playlist/queue.html" %}</div>
@@ -77,10 +83,7 @@
     </div><!-- /#wrapper -->
 
     <!-- JavaScript -->
-    <script src="{{ STATIC_URL }}js/jquery.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
-
-    <script src="{{ STATIC_URL }}js/playlist.js"></script>
 
   </body>
 </html>

@@ -9,6 +9,8 @@ from django.template import RequestContext, loader
 from registration.forms import RegistrationFormUniqueEmail
 from registration.backends.simple.views import RegistrationView
 
+from main.models import *
+
 def register_home(request):
     loginform = AuthenticationForm()
     if request.method == 'POST': # If the form registration has been submitted
@@ -25,4 +27,8 @@ def register_home(request):
 
 @login_required
 def playlist(request):
-    return render(request, 'playlist/playlist.html')
+
+    library_songs = Playlist.objects.get(user=request.user, is_requests=False).songs.all()
+
+    return render(request, 'playlist/playlist.html', {'library_songs':library_songs,})
+
