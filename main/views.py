@@ -31,4 +31,3 @@ def playlist(request):
     library_songs = Playlist.objects.get(user=request.user, is_requests=False).songs.all()
 
     return render(request, 'playlist/playlist.html', {'library_songs':library_songs,})
-

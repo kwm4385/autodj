@@ -10,18 +10,22 @@
         <p>If you have no pending song requests, music will be selected from your personal library.</p>
     </div>
     <div class="col-md-6 column">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Paste YouTube video link here">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-plus"></span> Add song</button>
-          </span>
-        </div><!-- /input-group -->
+
+        <form id="libraryForm" action="/playlist/addlibrarysong" method="post">{% csrf_token %}
+            <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Paste YouTube video link here">
+                  <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span> Add song</button>
+              </span>
+            </div><!-- /input-group -->
+        </form>
+
     </div>
 </div>
 <div class="row clearfix">
     <div class="col-md-12 column">
 
-        <table id="libraryTable" class="table table-hover tablesorter">
+        <table id="libraryTable" class="table table-hover">
             <thead>
                 <tr>
                     <th></th>

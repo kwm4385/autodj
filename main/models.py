@@ -1,18 +1,21 @@
 from django.db import models
 from django.db.models.fields import *
-from django.db.models.signals import pre_delete
+from django.db.models.signals import pre_delete, post_init
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
 from uuid import uuid4
+import urllib, json
 
 from registration.signals import user_registered
 
 from sortedm2m.fields import SortedManyToManyField
 
 class Song(models.Model):
-    url = URLField()
-    time_requested = DateTimeField(auto_now_add=True)
+    url = models.URLField()
+    time_requested = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=(100), default="Song title")
+    duration = models.CharField(max_length=10, default="0:00")
 
     def __str__(self):
         return self.url
@@ -29,6 +32,17 @@ class Playlist(models.Model):
 ##                ##
 # Signal Recievers #
 ##                ##
+
+@receiver(post_init)
+def get_song_data(sender, instance, **kwargs):
+    if sender == Song:
+        parsed_url = urllib.parse.urlparse(instance.url)
+        yt_id = urllib.parse.parse_qs(parsed_url.query)['v']
+        response = urllib.request.urlopen('http://gdata.youtube.com/feeds/api/videos/'+yt_id[0]+'?v=2&alt=jsonc').read().decode("utf-8")
+        obj = json.loads(response)
+        instance.title = obj['data']['title']
+        instance.duration = obj['data']['duration']
+        instance.save()
 
 @receiver(user_registered)
 def on_user_register(sender, **kwargs):

@@ -40,3 +40,13 @@ function getYoutubeData(url, id) {
     });
 };
 
+$(document).ready(function() { 
+    $('#libraryForm').ajaxForm(function() { 
+        alert("Song added"); 
+        $(':input','#libraryForm')
+          .not(':button, :submit, :reset, :hidden')
+          .val('')
+          .removeAttr('checked')
+          .removeAttr('selected');
+    }); 
+}); 
