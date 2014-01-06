@@ -267,16 +267,16 @@
                         Log In
                     </h4>
                 </div>
-                <div class="modal-body">
-                    <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
-                    {% load crispy_forms_tags %}
-                    {{ loginform|crispy }}
-                    <p>Need an account? <a href="#register" class="smoothScroll" onclick="$('#modal-container-370252').modal('hide')">Register now</a></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" value="login" class="btn btn-primary">Log In</button>
-                    </form>
-                </div>
+                <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
+                    <div class="modal-body">
+                        {% load crispy_forms_tags %}
+                        {{ loginform|crispy }}
+                        <p>Need an account? <a href="#register" class="smoothScroll" onclick="$('#modal-container-370252').modal('hide')">Register now</a></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="login" class="btn btn-primary">Log In</button>
+                    </div>
+                </form>
             </div>       
         </div>     
     </div>

@@ -15,9 +15,6 @@
             <form method="post" action="{% url "django.contrib.auth.views.login" %}">{% csrf_token %}
                 {% load crispy_forms_tags %}
                 {{ form|crispy }}
-                {% if form.errors %}
-                <p>Your username and password didn't match. Please try again.</p>
-                {% endif %}
                 <div class="row">
                     <div class="col-lg-8">
                         <p>Need an account? <a href="/#register">Register now</a></p>
