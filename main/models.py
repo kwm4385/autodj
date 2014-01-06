@@ -17,8 +17,9 @@ class Song(models.Model):
 
 class Playlist(models.Model):
     songs = SortedManyToManyField(Song, sort_value_field_name = "time_requested")
-    user = models.OneToOneField(User)
-    name = models.CharField(max_length = 30, default="Unnamed Platlist")
+    user = models.ForeignKey(User)
+    name = models.CharField(max_length = 30, default = "Unnamed Platlist")
+    is_requests = models.BooleanField(default = True)
 
     def __str__(self):
         return self.name
@@ -29,14 +30,17 @@ class Playlist(models.Model):
 
 @receiver(user_registered)
 def on_user_register(sender, **kwargs):
-    playlist = Playlist(user = kwargs["user"], name = kwargs["user"].username + "'s playlist")
+    req_playlist = Playlist(user = kwargs["user"], name = kwargs["user"].username + "'s request playlist")
+    playlist = Playlist(is_requests = False, user = kwargs["user"], name = kwargs["user"].username + "'s personal playlist")
     playlist.save()
+    req_playlist.save()
 
 @receiver(pre_delete)
 def delete_repo(sender, instance, **kwargs):
     if sender == User:
-        playlist = Playlist.objects.filter(user = instance)
-        playlist.delete()
+        playlists = Playlist.objects.filter(user = instance)
+        for list in playlists:
+            playlist.delete()
     elif sender == Playlist:
         for song in instance.songs.all():
             song.delete()
