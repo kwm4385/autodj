@@ -25,4 +25,4 @@ def register_home(request):
 
 @login_required
 def playlist(request):
-    return render(request, 'playlist.html')
+    return render(request, 'playlist/playlist.html')
