@@ -27,7 +27,19 @@ def register_home(request):
 
 @login_required
 def playlist(request):
-
     library_songs = Playlist.objects.get(user=request.user, is_requests=False).songs.all()
-
     return render(request, 'playlist/playlist.html', {'library_songs':library_songs,})
+
+@login_required
+def add_library_song(request):
+    if request.method == 'POST':
+        song = Song(url=request.POST["songurl"])
+        song.save()
+        pl = Playlist.objects.get(user = request.user, is_requests=False)
+        pl.songs.add(song)
+        pl.save()
+        msg = "successful submission"
+    else:
+        msg = "GET not allowed"
+    if not request.is_ajax():
+        return HttpResponse(msg)

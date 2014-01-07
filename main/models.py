@@ -36,13 +36,16 @@ class Playlist(models.Model):
 @receiver(post_init)
 def get_song_data(sender, instance, **kwargs):
     if sender == Song:
-        parsed_url = urllib.parse.urlparse(instance.url)
-        yt_id = urllib.parse.parse_qs(parsed_url.query)['v']
-        response = urllib.request.urlopen('http://gdata.youtube.com/feeds/api/videos/'+yt_id[0]+'?v=2&alt=jsonc').read().decode("utf-8")
-        obj = json.loads(response)
-        instance.title = obj['data']['title']
-        instance.duration = obj['data']['duration']
-        instance.save()
+        try:
+            parsed_url = urllib.parse.urlparse(instance.url)
+            yt_id = urllib.parse.parse_qs(parsed_url.query)['v']
+            response = urllib.request.urlopen('http://gdata.youtube.com/feeds/api/videos/'+yt_id[0]+'?v=2&alt=jsonc').read().decode("utf-8")
+            obj = json.loads(response)
+            instance.title = obj['data']['title']
+            instance.duration = obj['data']['duration']
+            instance.save()
+        except:
+            pass
 
 @receiver(user_registered)
 def on_user_register(sender, **kwargs):
