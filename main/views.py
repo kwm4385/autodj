@@ -41,5 +41,4 @@ def add_library_song(request):
         msg = "successful submission"
     else:
         msg = "GET not allowed"
-    if not request.is_ajax():
-        return HttpResponse(msg)
+    return HttpResponse(msg)

@@ -7,8 +7,11 @@ $(window).bind('beforeunload', function(){
 
 // wait for the DOM to be loaded 
 $(document).ready(function() { 
-    // bind 'myForm' and provide a simple callback function 
-    $('#libraryForm').ajaxForm(function(responseText) { 
-        alert(responseText); 
-    }); 
+    var options = { 
+        clearForm : true,
+        success: function(responseText) { 
+            alert(responseText); 
+        } 
+    }; 
+    $('#libraryForm').ajaxForm(options);
 }); 
