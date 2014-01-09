@@ -15,3 +15,17 @@ $(document).ready(function() {
     }; 
     $('#libraryForm').ajaxForm(options);
 }); 
+
+function validateSongurl() {
+    if($('#songurl').val() == '') {
+        $("#addsong").prop("disabled", true);
+    }
+    else {
+        $("#addsong").prop("disabled", false);
+    }
+}
+
+$(document).ready(function() {
+    validateSongurl();
+    $('#songurl').keyup(validateSongurl);
+});

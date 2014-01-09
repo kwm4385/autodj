@@ -9,13 +9,18 @@
     </div>
     <div class="col-md-6 column">
 
-        <form id="libraryForm" action="/playlist/addlibrarysong/" method="POST">{% csrf_token %}
-            <div class="input-group">
-                  <input name="songurl" type="text" class="form-control" placeholder="Paste YouTube video link here">
-                  <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span> Add song</button>
-              </span>
-            </div><!-- /input-group -->
+        <form class="form-horizontal" id="libraryForm" action="{% url 'main.views.add_library_song' %}" method="POST">{% csrf_token %}
+            <div class="control-group warning">
+                <label class="control-label" for="inputWarning">Input with warning</label>
+                <div class="controls">
+                    <div class="input-group">
+                          <input id="songurl" name="songurl" type="text" class="form-control" placeholder="Paste YouTube video link here">
+                          <span class="input-group-btn">
+                          <button id="addsong" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span> Add song</button>
+                      </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
         </form>
 
     </div>

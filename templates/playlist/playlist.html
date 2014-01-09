@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/"><b>AutoDJ</b></a>
+          <a class="navbar-brand" href="{% url 'main.views.register_home' %}"><b>AutoDJ</b></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -59,7 +59,7 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Welcome {{ user.username }} <strong class="caret"></strong>&nbsp;&nbsp;</a>
                 <ul class="dropdown-menu" id="navTab">
                     <li>
-                        <a href="/playlist">My Playlist</a>
+                        <a href="{% url 'main.views.playlist' %}">My Playlist</a>
                     </li>
                     <li>
                         <a href="/accounts/logout">Log Out</a>
