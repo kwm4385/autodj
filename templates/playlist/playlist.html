@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">
 
     <script src="{{ STATIC_URL }}js/jquery.js"></script>
-    <script src="{{ STATIC_URL }}js/playlist.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.form.js"></script> 
+    <script src="{{ STATIC_URL }}js/playlist.js"></script>
+    
   </head>
 
   <body>
@@ -58,12 +59,7 @@
             <li class="dropdown pull-right">
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span> Welcome {{ user.username }} <strong class="caret"></strong>&nbsp;&nbsp;</a>
                 <ul class="dropdown-menu" id="navTab">
-                    <li>
-                        <a href="{% url 'main.views.playlist' %}">My Playlist</a>
-                    </li>
-                    <li>
-                        <a href="/accounts/logout">Log Out</a>
-                    </li>
+                    {% include 'usermenu.html' %}
                 </ul>
             </li>
 
@@ -79,7 +75,8 @@
         <div class="tab-content">
           <div class="tab-pane active" id="player">{% include "playlist/queue.html" %}</div>
           <div class="tab-pane" id="library">{% include "playlist/library.html" %}</div>
-          <div class="tab-pane" id="settings">Settings here</div>
+          <div class="tab-pane" id="settings">Settings here
+          <iframe width="560" height="315" src="//www.youtube.com/embed/Gakwib4llpU" frameborder="0" allowfullscreen></iframe></div>
           <div class="tab-pane" id="help">Help here</div>
         </div>
 

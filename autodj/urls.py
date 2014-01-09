@@ -11,4 +11,6 @@ urlpatterns = patterns('',
     (r'^$', views.register_home),
     (r'^playlist/$', views.playlist),
     (r'^playlist/addlibrarysong/$', views.add_library_song),
+    (r'^playlist/deletelibrarysong/$', views.delete_library_song),
+    
 )

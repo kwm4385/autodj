@@ -4,25 +4,21 @@
     </div>
 </div>
 <div class="row clearfix">
-    <div class="col-md-6 column">
+    <div class="col-md-6 column" style="padding-top:30px;">
         <p>If you have no pending song requests, music will be selected from your personal library.</p>
     </div>
-    <div class="col-md-6 column">
-
+    <div id="add-song-group" class="col-md-6 column">
         <form class="form-horizontal" id="libraryForm" action="{% url 'main.views.add_library_song' %}" method="POST">{% csrf_token %}
-            <div class="control-group warning">
-                <label class="control-label" for="inputWarning">Input with warning</label>
-                <div class="controls">
-                    <div class="input-group">
-                          <input id="songurl" name="songurl" type="text" class="form-control" placeholder="Paste YouTube video link here">
-                          <span class="input-group-btn">
-                          <button id="addsong" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span> Add song</button>
-                      </span>
-                    </div><!-- /input-group -->
-                </div>
+            <div class="controls">
+                <label id="add-song-label" class="control-label" for="songurl"></label>
+                <div class="input-group"> 
+                    <input id="songurl" name="songurl" type="text" class="form-control" placeholder="Paste YouTube video link here">
+                    <span class="input-group-btn">
+                    <button id="addsong" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus"></span> Add song</button>
+                  </span>
+                </div><!-- /input-group -->
             </div>
-        </form>
-
+        </form>        
     </div>
 </div>
 <div class="row clearfix">
@@ -45,7 +41,12 @@
                     <td><p>{{ song.title }}</p></td>
                     <td><p>{{ song.duration }}</p></td>
                     <td><a href="{{ song.url }}" target=blank><span class="glyphicon glyphicon-share-alt"></span></a></td>
-                    <td><span class="glyphicon glyphicon-trash"></span></td>
+                    <td>
+                        <form id="del-{{ song.id }}" action="/playlist/deletelibrarysong/" method="post">{% csrf_token %}
+                            <input type="hidden" name="songid" value="{{ song.id }}"></input>
+                            <a href="javascript:{}" onclick="$.post('/playlist/deletelibrarysong/', {'csrfmiddlewaretoken': '{{ csrf_token }}', songid:'{{ song.id }}'});"><span class="glyphicon glyphicon-trash"></span></a>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

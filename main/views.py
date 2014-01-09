@@ -39,9 +39,9 @@ def playlist(request):
 
 @login_required
 def add_library_song(request):
-    song_url = request.POST["songurl"]
-    user_playlist = Playlist.objects.get(user = request.user, is_requests=False)
     if request.method == 'POST':
+        song_url = request.POST["songurl"]
+        user_playlist = Playlist.objects.get(user = request.user, is_requests=False)
         if not user_playlist.songs.all().filter(url=song_url).exists():
             parsed_url = urllib.parse.urlparse(song_url)
             if parsed_url[1] in ALLOWED_SONG_HOSTS:
@@ -50,13 +50,26 @@ def add_library_song(request):
                     song.save()
                     user_playlist.songs.add(song)
                     user_playlist.save()
-                    msg = "success"
+                    msg = "suc-Song successfully added."
                 else:
-                    msg = "err-parameter"
+                    msg = "err-URL does not appear to be a valid YouTube video."
             else:
-                msg = "err-domain"
+                msg = "err-Only YouTube links are supported at this time."
         else:
-            msg = "err-unique"
+            msg = "err-This song is already in your library."
     else:
-        msg = "GET not allowed"
+        return HttpResponseRedirect("/playlist")
     return HttpResponse(msg)
+
+@login_required
+def delete_library_song(request):
+    if request.method == 'POST':
+        song_id = int(request.POST["songid"][0])
+        user_playlist = Playlist.objects.get(user = request.user, is_requests=False)
+        if user_playlist.songs.all().filter(pk=song_id).exists():
+            song = user_playlist.songs.all().get(pk=song_id)
+            song.delete()
+            return HttpResponse("success")
+        else:
+            return HttpResponseForbidden()
+    return HttpResponseRedirect("/playlist")

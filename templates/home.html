@@ -46,12 +46,7 @@
                 <li class="dropdown pull-right">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">Welcome {{ user.username }}<strong class="caret"></strong></a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="/playlist">My Playlist</a>
-                        </li>
-                        <li>
-                            <a href="/accounts/logout">Log Out</a>
-                        </li>
+                        {% include 'usermenu.html' %}
                     </ul>
                 </li>
                 {% else %}
