@@ -11,6 +11,8 @@ from registration.signals import user_registered
 
 from sortedm2m.fields import SortedManyToManyField
 
+from main import util
+
 class Song(models.Model):
     url = models.URLField()
     time_requested = models.DateTimeField(auto_now_add=True)

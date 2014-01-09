@@ -101,3 +101,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 ACCOUNT_ACTIVATION_DAYS = 7
 
 LOGIN_REDIRECT_URL = '/playlist'
+
+ALLOWED_SONG_HOSTS = [
+    'www.youtube.com',
+]
