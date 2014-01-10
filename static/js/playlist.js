@@ -5,6 +5,21 @@ $(window).bind('beforeunload', function(){
 */
 
 /*
+Use anchors to preserve tab location on refresh.
+*/
+$(function(){
+  var hash = window.location.hash;
+  hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+
+  $('.side-nav a').click(function (e) {
+    $(this).tab('show');
+    var scrollmem = $('body').scrollTop();
+    window.location.hash = this.hash;
+    $('html,body').scrollTop(scrollmem);
+  });
+});
+
+/*
 Attach ajax to add library song form.
 */
 $(document).ready(function() { 
@@ -37,6 +52,7 @@ Add key listener to disable add library song button when input is empty.
 $(document).ready(function() {
     validateSongurl();
     $('#songurl').keyup(validateSongurl);
+    $('#songurl').change(validateSongurl);
 });
 function validateSongurl() {
     if($('#songurl').val() == '') {
@@ -46,8 +62,10 @@ function validateSongurl() {
         $("#addsong").prop("disabled", false);
     }
 }
-/* End key listener */
 
+/* 
+Refreshes the library table.
+*/
 function refreshLibrary() {
     $('#library-table').hide();
     $.ajax({
@@ -58,3 +76,4 @@ function refreshLibrary() {
       }
     });
 }
+
