@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^accounts/', include('registration.backends.simple.urls')),
     (r'^$', views.register_home),
     (r'^playlist/$', views.playlist),
+    (r'^playlist/librarysongs/$', views.get_library_songs),
     (r'^playlist/addlibrarysong/$', views.add_library_song),
     (r'^playlist/deletelibrarysong/$', views.delete_library_song),
     

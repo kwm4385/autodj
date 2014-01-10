@@ -1,0 +1,28 @@
+<script src="{{ STATIC_URL }}js/playlist.js"></script>
+<table id="libraryTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Duration</th>
+            <th><span class="glyphicon glyphicon-link"></span></th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for song in library_songs %}
+        <tr>
+            <td>{{ song.id }}</td>
+            <td><p>{{ song.title }}</p></td>
+            <td><p>{{ song.duration }}</p></td>
+            <td><a href="{{ song.url }}" target=blank><span class="glyphicon glyphicon-share-alt"></span></a></td>
+            <td>
+                <form id="del-{{ song.id }}" action="/playlist/deletelibrarysong/" method="post">{% csrf_token %}
+                    <input type="hidden" name="songid" value="{{ song.id }}"></input>
+                    <a href="javascript:{}" onclick="$.post('/playlist/deletelibrarysong/', {'csrfmiddlewaretoken': '{{ csrf_token }}', songid:'{{ song.id }}'}, refreshLibrary); return false;"><span class="glyphicon glyphicon-trash"></span></a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

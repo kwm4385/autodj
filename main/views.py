@@ -34,9 +34,13 @@ def register_home(request):
 
 @login_required
 def playlist(request):
-    library_songs = Playlist.objects.get(user=request.user, is_requests=False).songs.all()
-    return render(request, 'playlist/playlist.html', {'library_songs':library_songs,})
+    return render(request, 'playlist/playlist.html', {})
 
+@login_required
+def get_library_songs(request):
+    library_songs = Playlist.objects.get(user=request.user, is_requests=False).songs.all()
+    return render(request, 'playlist/library_table.html', {'library_songs':library_songs,})
+    
 @login_required
 def add_library_song(request):
     if request.method == 'POST':

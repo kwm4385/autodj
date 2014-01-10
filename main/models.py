@@ -23,7 +23,7 @@ class Song(models.Model):
     duration = models.CharField(max_length=10, default="0:00")
 
     def __str__(self):
-        return self.url
+        return self.title
 
 class Playlist(models.Model):
     songs = SortedManyToManyField(Song, sort_value_field_name = "time_requested")
