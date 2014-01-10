@@ -20,7 +20,12 @@ $(document).ready(function() {
                 $("#add-song-label").text(responseText.substring(4));
                 $("#songurl").val("");
                 refreshLibrary();
-            } 
+            }
+            setTimeout(function() {
+                $("#add-song-group").removeClass("has-error");
+                $("#add-song-group").removeClass("has-success");
+                $("#add-song-label").text("");
+            }, 5000);
         } 
     }; 
     $('#libraryForm').ajaxForm(options);
