@@ -67,12 +67,13 @@ function validateSongurl() {
 Refreshes the library table.
 */
 function refreshLibrary() {
-    $('#library-table').hide();
+    $('#library-table').html('<br/><br/><div class="row"><div class="col-lg-4"></div>' +
+        '<div class="col-lg-4"><div class="progress progress-striped active">' +
+        '<div class="progress-bar" style="width: 100%"></div></div></div><div class="col-lg-4"></div></div>');
     $.ajax({
       url: '/playlist/librarysongs',
       success: function(data) {
-        $('#library-table').html(data);
-        $('#library-table').fadeIn();
+        $('#library-table').hide().html(data).fadeIn();
       }
     });
 }
