@@ -13,11 +13,13 @@
 
     <!-- Add custom CSS here -->
     <link href="{{ STATIC_URL }}css/sb-admin.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/slider.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">
 
     <script src="{{ STATIC_URL }}js/jquery.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.form.js"></script> 
     <script src="{{ STATIC_URL }}js/playlist.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap-slider.js"></script>
     
   </head>
 
@@ -67,19 +69,23 @@
         </div><!-- /.navbar-collapse -->
       </nav>
 
-      <div id="page-wrapper" >
+      <div id="page-wrapper">
         <noscript>
           <div class="alert alert-danger"><b>Warning!</b> You need Javascript enabled to use this site.</div>
         </noscript>
 
         <div class="tab-content">
+
           <div class="tab-pane active" id="player">{% include "playlist/queue.html" %}</div>
+
           <div class="tab-pane" id="library">{% include "playlist/library.html" %}</div>
+
           <div class="tab-pane" id="settings">Settings here
           <iframe width="560" height="315" src="//www.youtube.com/embed/Gakwib4llpU" frameborder="0" allowfullscreen></iframe></div>
-          <div class="tab-pane" id="help">Help here</div>
-        </div>
 
+          <div class="tab-pane" id="help">Help here</div>
+
+        </div>
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->

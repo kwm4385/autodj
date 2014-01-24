@@ -67,9 +67,9 @@ function validateSongurl() {
 Refreshes the library table.
 */
 function refreshLibrary() {
-    $('#library-table').html('<br/><br/><div class="row"><div class="col-lg-4"></div>' +
-        '<div class="col-lg-4"><div class="progress progress-striped active">' +
-        '<div class="progress-bar" style="width: 100%"></div></div></div><div class="col-lg-4"></div></div>');
+    $('#library-table').html('<br/><br/><div class="row">' +
+        '<div class="col-lg-4 col-lg-offset-4"><div class="progress progress-striped active">' +
+        '<div class="progress-bar progress-bar-info" style="width: 100%"></div></div></div></div>');
     $.ajax({
       url: '/playlist/librarysongs',
       success: function(data) {
@@ -78,3 +78,12 @@ function refreshLibrary() {
     });
 }
 
+$(document).ready(function() {
+    $('#volume').slider({
+        min:0,
+        max:100,
+        orientation:'horizontal',
+        value:100,
+    });
+    $('.slider').css('width', '125');
+});
