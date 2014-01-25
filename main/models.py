@@ -22,6 +22,14 @@ class Song(models.Model):
     title = models.CharField(max_length=(100), default="Song title")
     duration = models.CharField(max_length=10, default="0:00")
 
+    def as_dict(self):
+        return {
+        'url' : self.url,
+        'time_requested' : str(self.time_requested),
+        'title' : self.title,
+        'duration' : self.duration
+        }
+
     def __str__(self):
         return self.title
 
@@ -30,6 +38,16 @@ class Playlist(models.Model):
     user = models.ForeignKey(User)
     name = models.CharField(max_length = 30, default = "Unnamed Platlist")
     is_requests = models.BooleanField(default = True)
+
+    def as_dict(self):
+        songlist = []
+        for song in self.songs.all():
+            songlist.append(song.as_dict())
+        return {
+        'songs' : songlist,
+        'user' : self.user.username,
+        'is_requests' : self.is_requests
+        }
 
     def __str__(self):
         return self.name

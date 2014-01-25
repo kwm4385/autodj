@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.shortcuts import render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import *
@@ -7,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidde
 from django.template import RequestContext, loader
 
 import urllib
+import json
 
 from registration.forms import RegistrationFormUniqueEmail
 from registration.backends.simple.views import RegistrationView
@@ -77,3 +79,9 @@ def delete_library_song(request):
         else:
             return HttpResponseForbidden()
     return HttpResponseRedirect("/playlist")
+
+@login_required
+def get_request_playlist(request):
+     request_playlist = Playlist.objects.get(user=request.user, is_requests=True)
+     response_data = request_playlist.as_dict()
+     return HttpResponse(json.dumps(response_data), content_type="application/json")

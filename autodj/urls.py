@@ -13,5 +13,6 @@ urlpatterns = patterns('',
     (r'^playlist/librarysongs/$', views.get_library_songs),
     (r'^playlist/addlibrarysong/$', views.add_library_song),
     (r'^playlist/deletelibrarysong/$', views.delete_library_song),
+    (r'^playlist/getrequests/$', views.get_request_playlist),
     
 )
