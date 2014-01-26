@@ -24,6 +24,7 @@ class Song(models.Model):
 
     def as_dict(self):
         return {
+        'id' : self.id,
         'url' : self.url,
         'time_requested' : str(self.time_requested),
         'title' : self.title,

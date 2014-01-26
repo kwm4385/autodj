@@ -78,6 +78,9 @@ function refreshLibrary() {
     });
 }
 
+/*
+Initialized the player volume slider
+*/
 $(document).ready(function() {
     $('#volume').slider({
         min:0,
@@ -87,3 +90,27 @@ $(document).ready(function() {
     });
     $('.slider').css('width', '125');
 });
+
+$(document).ready(function() {
+    $.getJSON( "/playlist/getrequests/", function(data) {
+        console.log(data);
+        $.each(data.songs, function(index, value) {
+            addRequestTableRow(value.id, value.title, value.duration, value.link);
+        });
+    });
+});
+
+function addRequestTableRow(id, title, duration, link) {
+    if(!($("#sr"+id).length)) {
+        $("#requestTable tbody").append(
+        "<tr id=\"sr" + id + "\">" +
+        "<td>" + title + "</td>" +
+        "<td>" + duration + "</td>" +
+        "<td></td>" +
+        "<td></td>" +
+        "<td><a href=\"" + link + "\"><span class=\"glyphicon glyphicon-share-alt\"></a></td>" +
+        "<td><span class=\"glyphicon glyphicon-trash\"></td>" +
+        "</tr>"
+        );
+    }
+}

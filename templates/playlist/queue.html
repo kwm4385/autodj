@@ -4,12 +4,13 @@
     <div class="col-lg-8">
         <div class="panel panel-default">
           <div class="panel-heading">Request Queue</div>
-          <table class="table">
+          <table id="requestTable" class="table">
             <thead>
                 <tr>
-                    <th></th>
                     <th>Title</th>
                     <th>Duration</th>
+                    <th>Requested by</th>
+                    <th>Time requested</th>
                     <th><span class="glyphicon glyphicon-link"></span></th>
                     <th>Remove</th>
                 </tr>
@@ -24,10 +25,10 @@
     <div class="col-lg-4">
         <div class="panel panel-default">
           <div class="panel-heading">Now Playing</div>
-          <div class="panel-body">
+          <div id="nowplaying" class="panel-body">
             ...
           </div>
-
+          <div class="panel-footer">Up Next:</div>
         </div>
     </div>
 </div>
