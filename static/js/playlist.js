@@ -91,20 +91,32 @@ $(document).ready(function() {
     $('.slider').css('width', '125');
 });
 
-$(document).ready(function() {
+/*
+Retrives the user's request playlist and updates the table.
+*/
+function fetchRequests() {
+    $("#loader").show();
     $.getJSON( "/playlist/getrequests/", function(data) {
-        console.log(data);
         $.each(data.songs, function(index, value) {
-            addRequestTableRow(value.id, value.title, value.duration, value.link);
+            addRequestTableRow(value.id, index + 1, value.title, value.duration, value.link);
         });
+        $("#loader").fadeOut();
     });
+}
+$(document).ready(function() {
+    fetchRequests();
+    setInterval(fetchRequests, 10000);
 });
 
-function addRequestTableRow(id, title, duration, link) {
-    $("#norequests").hide();
+/*
+Adds a row to the request table
+*/
+function addRequestTableRow(id, index, title, duration, link) {
     if(!($("#sr"+id).length)) {
+        $("#norequests").hide();
         $("#requestTable tbody").append(
         "<tr id=\"sr" + id + "\">" +
+        "<td>" + index + "</td>" +
         "<td>" + title + "</td>" +
         "<td>" + duration + "</td>" +
         "<td></td>" +
