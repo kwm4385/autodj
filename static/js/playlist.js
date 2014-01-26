@@ -101,6 +101,7 @@ $(document).ready(function() {
 });
 
 function addRequestTableRow(id, title, duration, link) {
+    $("#norequests").hide();
     if(!($("#sr"+id).length)) {
         $("#requestTable tbody").append(
         "<tr id=\"sr" + id + "\">" +
