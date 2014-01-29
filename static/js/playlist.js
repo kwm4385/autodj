@@ -120,9 +120,35 @@ function fetchRequests() {
         $("#loader").fadeOut();
     });
 }
+function fetchRequestsInitial() {
+    $("#loader").show();
+    $.getJSON( "/playlist/getrequests/", function(data) {
+
+        // Add new songs to the table
+        $.each(data.songs, function(index, value) {
+            addRequestTableRow(value.id, index + 1, value.title, value.duration, value.url);
+        });
+
+        // Remove songs that are no longer on the playlist
+        requestRows = $('#requestTable tbody').children('tr');
+        $.each(requestRows, function(index, value) {
+            found = false;
+            $.each(data.songs, function(sindex, svalue) {
+                if(value.id.substring(2) == svalue.id) {
+                    found = true;
+                }
+            });
+            if(!found) {
+                value.remove();
+            }
+        });
+        queueNextSong();
+        $("#loader").fadeOut();
+    });
+}
 document.addEventListener("DOMContentLoaded", function () {
-    fetchRequests();
-    queueNextSong();
+    fetchRequestsInitial();
+    $("#skip").click(skipSong);
     setInterval(fetchRequests, 10000);
 }, false);
 
@@ -139,7 +165,7 @@ function addRequestTableRow(id, index, title, duration, link) {
         "<td>" + duration + "</td>" +
         "<td></td>" +
         "<td></td>" +
-        "<td><a href=\"" + link + "\"><span class=\"glyphicon glyphicon-share-alt\"></a></td>" +
+        "<td class=\"songlink\"><a href=\"" + link + "\"><span class=\"glyphicon glyphicon-share-alt\"></a></td>" +
         "<td><span class=\"glyphicon glyphicon-trash\"></td>" +
         "</tr>"
         );
@@ -148,13 +174,16 @@ function addRequestTableRow(id, index, title, duration, link) {
 var player;
 function queueNextSong() {
     var nextURL;
-    console.log($("#sr1").id);
-    if($('#requestTable tbody').children('tr')) {
-
+    nextRequest = $('#requestTable tbody').find("tr:first");
+    if(nextRequest.length) {
+        console.log("playing requests");
+        nextURL = nextRequest.children(".songlink").children("a").attr("href");
+    } else {
+        console.log("playing library");
     }
     player = Popcorn.smart(
                '#musicplayer',
-               'https://www.youtube.com/watch?v=IxxstCcJlsc' );
+               nextURL + '&controls=0');
 
     player.on('play', function() {
         console.log('play');
@@ -162,12 +191,15 @@ function queueNextSong() {
     player.on('pause', function() {
         console.log('pause');
     });
+    player.on('ended', function() {
+        endSong();
+    });
 
     $('#volume').slider()
       .on('slide', function(ev){
         player.volume(ev.value / 100);
     });
-    //window.player.controls(false);
+
     unpauseSong();
     //$("#musicplayer").hide();
 }
@@ -184,4 +216,17 @@ function unpauseSong() {
     $("#playpause").unbind();
     $("#playpause").click(pauseSong);
     $("#playpause").html('<span class="glyphicon glyphicon-pause"></span>');
+    $("#playpause").removeClass("disabled");
+}
+
+function skipSong() {
+    console.log("skip");
+    endSong();
+}
+
+function endSong() {
+    $('#requestTable tbody').find("tr:first").remove();
+    console.log("ended");
+    $('#musicplayer').html("");
+    queueNextSong();
 }
