@@ -1,6 +1,6 @@
 /*
 $(window).bind('beforeunload', function(){
-  return 'Leaving will interrupt music playback.';
+  return 'Leaving this page interrupt music playback.';
 });
 */
 
@@ -22,7 +22,7 @@ $(function(){
 /*
 Attach ajax to add library song form.
 */
-$(document).ready(function() { 
+document.addEventListener("DOMContentLoaded", function () {
     var options = { 
         success: function(responseText) { 
             if(responseText.substring(0, 4) == "err-") {
@@ -44,16 +44,16 @@ $(document).ready(function() {
         } 
     }; 
     $('#libraryForm').ajaxForm(options);
-}); 
+}, false);
 
 /*
 Add key listener to disable add library song button when input is empty.
 */
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function () {
     validateSongurl();
     $('#songurl').keyup(validateSongurl);
     $('#songurl').change(validateSongurl);
-});
+}, false);
 function validateSongurl() {
     if($('#songurl').val() == '') {
         $("#addsong").prop("disabled", true);
@@ -81,7 +81,7 @@ function refreshLibrary() {
 /*
 Initialized the player volume slider
 */
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function () {
     $('#volume').slider({
         min:0,
         max:100,
@@ -89,7 +89,7 @@ $(document).ready(function() {
         value:100,
     });
     $('.slider').css('width', '125');
-});
+}, false);
 
 /*
 Retrives the user's request playlist and updates the table.
@@ -100,7 +100,7 @@ function fetchRequests() {
 
         // Add new songs to the table
         $.each(data.songs, function(index, value) {
-            addRequestTableRow(value.id, index + 1, value.title, value.duration, value.link);
+            addRequestTableRow(value.id, index + 1, value.title, value.duration, value.url);
         });
 
         // Remove songs that are no longer on the playlist
@@ -120,10 +120,11 @@ function fetchRequests() {
         $("#loader").fadeOut();
     });
 }
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function () {
     fetchRequests();
+    queueNextSong();
     setInterval(fetchRequests, 10000);
-});
+}, false);
 
 /*
 Adds a row to the request table
@@ -143,4 +144,44 @@ function addRequestTableRow(id, index, title, duration, link) {
         "</tr>"
         );
     }
+}
+var player;
+function queueNextSong() {
+    var nextURL;
+    console.log($("#sr1").id);
+    if($('#requestTable tbody').children('tr')) {
+
+    }
+    player = Popcorn.smart(
+               '#musicplayer',
+               'https://www.youtube.com/watch?v=IxxstCcJlsc' );
+
+    player.on('play', function() {
+        console.log('play');
+    });
+    player.on('pause', function() {
+        console.log('pause');
+    });
+
+    $('#volume').slider()
+      .on('slide', function(ev){
+        player.volume(ev.value / 100);
+    });
+    //window.player.controls(false);
+    unpauseSong();
+    //$("#musicplayer").hide();
+}
+
+function pauseSong() {
+    player.pause();
+    $("#playpause").unbind();
+    $("#playpause").click(unpauseSong);
+    $("#playpause").html('<span class="glyphicon glyphicon-play"></span>');
+}
+
+function unpauseSong() {
+    player.play();
+    $("#playpause").unbind();
+    $("#playpause").click(pauseSong);
+    $("#playpause").html('<span class="glyphicon glyphicon-pause"></span>');
 }
