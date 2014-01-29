@@ -193,6 +193,18 @@ function queueNextSong() {
     player.on('loadeddata', function() {
         player.volume($('#volume').slider().data('slider').getValue() / 100);
     });
+    player.on('volumechange', function() {
+        if(player.volume() == 0) {
+            $("#volumeicon").removeClass();
+            $("#volumeicon").addClass('glyphicon glyphicon-volume-off');
+        } else if(player.volume() > 0.4) {
+            $("#volumeicon").removeClass();
+            $("#volumeicon").addClass('glyphicon glyphicon-volume-up');
+        } else {
+            $("#volumeicon").removeClass();
+            $("#volumeicon").addClass('glyphicon glyphicon-volume-down');
+        }
+    });
 
     $('#volume').slider()
       .on('slide', function(ev){
@@ -246,6 +258,7 @@ function skipSong() {
 function endSong() {
     $('#requestTable tbody').find("tr:first").remove();
     console.log("ended");
+    player.destroy();
     $('#musicplayer').html("");
     queueNextSong();
 }
