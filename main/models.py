@@ -25,7 +25,7 @@ class Song(models.Model):
     def as_dict(self):
         return {
         'id' : self.id,
-        'url' : self.url,
+        'url' : self.url[0:(self.url.find('&list') if self.url.find('&list') != -1 else len(self.url))],
         'time_requested' : str(self.time_requested),
         'title' : self.title,
         'duration' : self.duration

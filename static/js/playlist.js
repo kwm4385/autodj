@@ -185,20 +185,19 @@ function queueNextSong() {
                '#musicplayer',
                nextURL + '&controls=0');
 
-    player.on('play', function() {
-        console.log('play');
-    });
-    player.on('pause', function() {
-        console.log('pause');
-    });
     player.on('ended', function() {
         endSong();
+    });
+    player.on('loadeddata', function() {
+        player.volume($('#volume').slider().data('slider').getValue() / 100);
     });
 
     $('#volume').slider()
       .on('slide', function(ev){
         player.volume(ev.value / 100);
     });
+
+    $('videothumb').attr("src", "http://img.youtube.com/vi/" + getparam(nextURL, "v") + "/0.jpg");
 
     unpauseSong();
     //$("#musicplayer").hide();
@@ -209,6 +208,7 @@ function pauseSong() {
     $("#playpause").unbind();
     $("#playpause").click(unpauseSong);
     $("#playpause").html('<span class="glyphicon glyphicon-play"></span>');
+    $("#playpause").removeClass("disabled");
 }
 
 function unpauseSong() {
@@ -229,4 +229,17 @@ function endSong() {
     console.log("ended");
     $('#musicplayer').html("");
     queueNextSong();
+}
+
+function getparam(url, name) {
+  var params = url.substr(url.indexOf("?")+1);
+  var sval = "";
+  params = params.split("&");
+    for (var i=0; i<params.length; i++) {
+        temp = params[i].split("=");
+        if ( [temp[0]] == name ) { 
+            sval = temp[1]; 
+        }
+    }
+  return sval;
 }
