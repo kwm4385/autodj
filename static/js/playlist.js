@@ -149,7 +149,7 @@ function fetchRequestsInitial() {
 document.addEventListener("DOMContentLoaded", function () {
     fetchRequestsInitial();
     $("#skip").click(skipSong);
-    setInterval(fetchRequests, 10000);
+    setInterval(fetchRequests, 5000);
 }, false);
 
 /*
@@ -175,18 +175,20 @@ var player;
 function queueNextSong() {
     var nextURL;
     nextRequest = $('#requestTable tbody').find("tr:first");
+    nextURL = "https://www.youtube.com/watch?v=ZlTAFkubtSM";
     if(nextRequest.length) {
         console.log("playing requests");
         nextURL = nextRequest.children(".songlink").children("a").attr("href");
     } else {
         console.log("playing library");
+        nextURL = pickLibrarySong();
     }
     player = Popcorn.smart(
                '#musicplayer',
                nextURL + '&controls=0');
 
     player.on('ended', function() {
-        endSong();
+        endSong();  
     });
     player.on('loadeddata', function() {
         player.volume($('#volume').slider().data('slider').getValue() / 100);
@@ -201,6 +203,23 @@ function queueNextSong() {
 
     unpauseSong();
     //$("#musicplayer").hide();
+}
+
+function pickLibrarySong() {
+    $("#loader").show();
+    var url;
+    $.ajax({
+        url: "/playlist/getlibrary/",
+        type: 'GET',
+        async: false,
+        success: function(data) {
+            rand = Math.floor(Math.random() * data.songs.length);
+            console.log(data.songs[rand].url);
+            url = data.songs[rand].url;
+            $("#loader").fadeOut();
+        }
+    });
+    return url;
 }
 
 function pauseSong() {
@@ -232,14 +251,14 @@ function endSong() {
 }
 
 function getparam(url, name) {
-  var params = url.substr(url.indexOf("?")+1);
-  var sval = "";
-  params = params.split("&");
+    var params = url.substr(url.indexOf("?")+1);
+    var sval = "";
+    params = params.split("&");
     for (var i=0; i<params.length; i++) {
         temp = params[i].split("=");
         if ( [temp[0]] == name ) { 
             sval = temp[1]; 
         }
     }
-  return sval;
+    return sval;
 }
