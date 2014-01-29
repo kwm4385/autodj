@@ -97,9 +97,26 @@ Retrives the user's request playlist and updates the table.
 function fetchRequests() {
     $("#loader").show();
     $.getJSON( "/playlist/getrequests/", function(data) {
+
+        // Add new songs to the table
         $.each(data.songs, function(index, value) {
             addRequestTableRow(value.id, index + 1, value.title, value.duration, value.link);
         });
+
+        // Remove songs that are no longer on the playlist
+        requestRows = $('#requestTable tbody').children('tr');
+        $.each(requestRows, function(index, value) {
+            found = false;
+            $.each(data.songs, function(sindex, svalue) {
+                if(value.id.substring(2) == svalue.id) {
+                    found = true;
+                }
+            });
+            if(!found) {
+                value.remove();
+            }
+        });
+
         $("#loader").fadeOut();
     });
 }
