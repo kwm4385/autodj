@@ -60,12 +60,16 @@ class Playlist(models.Model):
 @receiver(post_init)
 def get_song_data(sender, instance, **kwargs):
     if sender == Song:
-        parsed_url = urllib.parse.urlparse(instance.url)
-        yt_id = urllib.parse.parse_qs(parsed_url.query)['v'][0]
-        json = requests.get('http://gdata.youtube.com/feeds/api/videos/'+yt_id+'?v=2&alt=jsonc').json()
-        instance.title = json['data']['title']
-        instance.duration = util.seconds_to_hms(int(json['data']['duration']))
-        instance.save()
+        try:
+            parsed_url = urllib.parse.urlparse(instance.url)
+            yt_id = urllib.parse.parse_qs(parsed_url.query)['v'][0]
+            json = requests.get('http://gdata.youtube.com/feeds/api/videos/'+yt_id+'?v=2&alt=jsonc').json()
+            instance.title = json['data']['title']
+            instance.duration = util.seconds_to_hms(int(json['data']['duration']))
+            instance.save()
+        except KeyError:
+            print("Youtube JSON error encountered. Deleting song entry: " + instance.url)
+            instance.delete()
 
 @receiver(user_registered)
 def on_user_register(sender, **kwargs):

@@ -30,7 +30,7 @@
           <div id="nowplaying" class="panel-body">
             <div style="position: relative; width: 500px; height: 340px;">
                 <div id="musicplayer" style="width: 500px; height: 340px; position: absolute; top: 0; left: 0;"></div>
-                <div style="position: absolute; top: 0; left: 0; z-index: 999; width: 500px; height: 340px;"></div>
+                <div style="position: absolute; top: 0; left: 0; z-index: 10; width: 500px; height: 340px;"></div>
             </div>
           </div>
           <div class="panel-footer">Up Next: <img id="videothumb"/></div>
@@ -38,11 +38,8 @@
     </div>
 </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom" style="font-size:20px; z-index:-1; text-align: center;">
-  <a style="margin-right:230px;"></a>
-  <a class="btn btn-default btn-lg">
-    <span class="glyphicon glyphicon-backward"></span>
-  </a>
+<nav class="navbar navbar-default navbar-fixed-bottom" style="font-size:20px; z-index:1; text-align: center;">
+  <a style="margin-right:115px;"></a>
   <a id="playpause" class="btn btn-primary btn-lg disabled"> 
   </a>
   <a id="skip" class="btn btn-default btn-lg">

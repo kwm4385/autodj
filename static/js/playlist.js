@@ -143,6 +143,7 @@ function fetchRequestsInitial() {
             }
         });
         queueNextSong();
+        pauseSong();
         $("#loader").fadeOut();
     });
 }
@@ -150,6 +151,18 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchRequestsInitial();
     $("#skip").click(skipSong);
     setInterval(fetchRequests, 5000);
+}, false);
+
+/*
+Attach keyboard shortcut listeners
+*/
+document.addEventListener("DOMContentLoaded", function () {
+    $(document).keypress(function(event) {
+      if (event.which == 32) {
+         event.preventDefault();
+         $("#playpause").click();
+      }
+    });
 }, false);
 
 /*
@@ -217,6 +230,9 @@ function queueNextSong() {
     //$("#musicplayer").hide();
 }
 
+/*
+Chooses and random song from the user's library and returns the url.
+*/
 function pickLibrarySong() {
     $("#loader").show();
     var url;
@@ -234,6 +250,9 @@ function pickLibrarySong() {
     return url;
 }
 
+/*
+Pauses the current song
+*/
 function pauseSong() {
     player.pause();
     $("#playpause").unbind();
@@ -242,6 +261,9 @@ function pauseSong() {
     $("#playpause").removeClass("disabled");
 }
 
+/*
+Unpauses the current song
+*/
 function unpauseSong() {
     player.play();
     $("#playpause").unbind();
@@ -250,11 +272,17 @@ function unpauseSong() {
     $("#playpause").removeClass("disabled");
 }
 
+/*
+Skips the current song
+*/
 function skipSong() {
     console.log("skip");
     endSong();
 }
 
+/*
+Actions preformed at the end of each song
+*/
 function endSong() {
     $('#requestTable tbody').find("tr:first").remove();
     console.log("ended");
@@ -263,6 +291,9 @@ function endSong() {
     queueNextSong();
 }
 
+/*
+Gets a parameter from a url by name.
+*/
 function getparam(url, name) {
     var params = url.substr(url.indexOf("?")+1);
     var sval = "";
