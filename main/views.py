@@ -81,7 +81,7 @@ def delete_library_song(request):
 
 @login_required
 def get_request_playlist(request):
-     request_playlist = Playlist.objects.get(user=request.user, is_requests=False)
+     request_playlist = Playlist.objects.get(user=request.user, is_requests=True)
      response_data = request_playlist.as_dict()
      return HttpResponse(json.dumps(response_data), content_type="application/json")
 

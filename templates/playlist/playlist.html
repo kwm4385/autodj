@@ -81,11 +81,22 @@
           <div class="tab-pane" id="library">{% include "playlist/library.html" %}</div>
 
           <div class="tab-pane" id="settings">Settings here
-          <iframe width="560" height="315" src="//www.youtube.com/embed/Gakwib4llpU" frameborder="0" allowfullscreen></iframe></div>
+        </div>
 
           <div class="tab-pane" id="help">Help here</div>
 
         </div>
+          <nav class="navbar navbar-default navbar-fixed-bottom" style="font-size:20px; z-index:1; text-align: center;">
+          <a style="margin-right:115px;"></a>
+          <a id="playpause" class="btn btn-primary btn-lg disabled"> 
+          </a>
+          <a id="skip" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-forward"></span>
+          </a>
+          <a href="#" style="margin-left:30px;"></a>
+          <span id="volumeicon" style="color:#fff; top:5px; right:8px" class="glyphicon glyphicon-volume-up"></span>
+          <div id="volume"></div>
+        </nav>
       </div><!-- /#page-wrapper -->
 
     </div><!-- /#wrapper -->
