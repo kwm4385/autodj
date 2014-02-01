@@ -120,7 +120,7 @@
       page: 'page',
       perPage: 'perPage',
       offset: 'offset',
-      records: 'records',
+      records: 'songs',
       record: null,
       queryRecordCount: 'queryRecordCount',
       totalRecordCount: 'totalRecordCount'
