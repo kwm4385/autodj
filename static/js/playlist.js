@@ -73,7 +73,9 @@ function refreshLibrary() {
     $.ajax({
       url: '/playlist/librarysongs',
       success: function(data) {
-        $('#library-table').hide().html(data).fadeIn();
+        $('#library-table').hide().html("<br/>" + data).fadeIn();
+        $('#libraryTable').dynatable();
+        $("#dynatable-query-search-libraryTable").addClass("form-control");
       }
     });
 }
