@@ -26,14 +26,23 @@
 
     <div class="col-lg-4">
         <div class="panel panel-default">
-          <div class="panel-heading">Now Playing</div>
+          <div class="panel-heading">Now Playing</div> 
           <div id="nowplaying" class="panel-body">
-            <div style="position: relative; width: 500px; height: 340px;">
+            <div class="row well">
+                <div class="col-sm-6">
+                    <div id="videothumb"></div>
+                </div>
+                <div class="col-sm-6">
+                    <p>Song title</p>
+                    <p>Requested by:</p>
+                </div>
+            </div>
+            <div id="videocontainer" style="position: relative; width: 500px; height: 340px;">
                 <div id="musicplayer" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>
                 <div style="position: absolute; top: 0; left: 0; z-index: 10; width: 100%; height: 100%;"></div>
             </div>
           </div>
-          <div class="panel-footer">Up Next: <img id="videothumb"/></div>
+          <div class="panel-footer">Up Next:</div>
         </div>
     </div>
 </div>

@@ -226,10 +226,9 @@ function queueNextSong() {
         player.volume(ev.value / 100);
     });
 
-    $('videothumb').attr("src", "http://img.youtube.com/vi/" + getparam(nextURL, "v") + "/0.jpg");
-
+    $('#videothumb').html('<img src="http://img.youtube.com/vi/' + getparam(nextURL, "v") + '/0.jpg" height="140" width="180"/>');
     unpauseSong();
-    //$("#musicplayer").hide();
+    // $("#videocontainer").hide();
 }
 
 /*
@@ -244,7 +243,6 @@ function pickLibrarySong() {
         async: false,
         success: function(data) {
             rand = Math.floor(Math.random() * data.songs.length);
-            console.log(data.songs[rand].url);
             url = data.songs[rand].url;
             $("#loader").fadeOut();
         }
