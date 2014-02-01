@@ -16,13 +16,15 @@
     <link href="{{ STATIC_URL }}css/slider.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.dynatable.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/offline-theme-slide.css">
 
     <script src="{{ STATIC_URL }}js/jquery.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.form.js"></script> 
     <script src="{{ STATIC_URL }}js/playlist.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-slider.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.dynatable.js"></script>
-    <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+    <script src="{{ STATIC_URL }}js/popcorn-complete.min.js"></script>
+    <script src="{{ STATIC_URL }}js/offline.min.js"></script>
   </head>
 
   <body style="padding-bottom: 100px;">
@@ -109,6 +111,5 @@
     <!-- JavaScript -->
     <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
     
-
   </body>
 </html>
