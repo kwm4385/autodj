@@ -90,7 +90,8 @@ document.addEventListener("DOMContentLoaded", function () {
         orientation:'horizontal',
         value:100,
     });
-    $('.slider').css('width', '125');
+    $('.slider').css('width', '7%');
+    $('.slider').css('min-width', '75px');
 }, false);
 
 /*
@@ -186,6 +187,10 @@ function addRequestTableRow(id, index, title, duration, link) {
         );
     }
 }
+
+/*
+Queues the next song from either requests or the user's library.
+*/
 var player;
 function queueNextSong() {
     var nextURL;
@@ -292,6 +297,25 @@ function endSong() {
 }
 
 /*
+Deletes a song from the uer's request playlist.
+*/
+function deleteRequest(song_id) {
+    var csrf = $.cookie('csrftoken');
+    var data = {"songid" : song_id}
+    $.ajax({
+      type: "POST",
+      headers: {
+        "X-CSRFToken" : csrf,
+      },
+      url: "/playlist/deleterequestsong/",
+      data: data,
+      success: function() {
+        console.log()
+      },
+    });
+}
+
+/*
 Gets a parameter from a url by name.
 */
 function getparam(url, name) {
@@ -300,7 +324,7 @@ function getparam(url, name) {
     params = params.split("&");
     for (var i=0; i<params.length; i++) {
         temp = params[i].split("=");
-        if ( [temp[0]] == name ) { 
+        if ([temp[0]] == name) { 
             sval = temp[1]; 
         }
     }

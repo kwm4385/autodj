@@ -80,6 +80,19 @@ def delete_library_song(request):
     return HttpResponseRedirect("/playlist")
 
 @login_required
+def delete_request_song(request):
+    if request.method == 'POST':
+        song_id = int(request.POST["songid"][0])
+        user_playlist = Playlist.objects.get(user = request.user, is_requests=True)
+        if user_playlist.songs.all().filter(pk=song_id).exists():
+            song = user_playlist.songs.all().get(pk=song_id)
+            song.delete()
+            return HttpResponse("success")
+        else:
+            return HttpResponseForbidden()
+    return HttpResponseRedirect("/playlist")
+
+@login_required
 def get_request_playlist(request):
      request_playlist = Playlist.objects.get(user=request.user, is_requests=True)
      response_data = request_playlist.as_dict()

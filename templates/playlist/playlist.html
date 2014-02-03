@@ -23,6 +23,7 @@
     <script src="{{ STATIC_URL }}js/playlist.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap-slider.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.dynatable.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
     <script src="{{ STATIC_URL }}js/popcorn-complete.min.js"></script>
     <script src="{{ STATIC_URL }}js/offline.min.js"></script>
   </head>
@@ -91,15 +92,15 @@
         </div>
 
         <!-- Music controls-->
-        <nav class="navbar navbar-default navbar-fixed-bottom" style="font-size:20px; z-index:1; text-align: center;">
-        <a style="margin-right:230px;"></a>
-        <a id="playpause" class="btn btn-primary btn-lg disabled"> 
+        <nav class="navbar navbar-default navbar-fixed-bottom" style="font-size:20px; z-index:2; text-align: center;">
+        <a style="margin-right:10%;"></a>
+        <a id="playpause" class="btn btn-primary btn-lg disabled" style="width:5%; min-width:25px;"> 
         </a>
-        <a id="skip" class="btn btn-default btn-lg">
+        <a id="skip" class="btn btn-default btn-lg" style="width:5%; min-width:25px;">
           <span class="glyphicon glyphicon-forward"></span>
         </a>
         <a href="#" style="margin-left:30px;"></a>
-        <span id="volumeicon" style="color:#fff; top:5px; right:8px" class="glyphicon glyphicon-volume-up"></span>
+        <span id="volumeicon" style="color:#fff; top:5px; right:1%" class="glyphicon glyphicon-volume-up"></span>
         <div id="volume"></div>
         </nav>
         <!-- /Music controls-->
