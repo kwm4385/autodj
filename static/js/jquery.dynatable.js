@@ -1204,12 +1204,12 @@
             type: 'search',
             id: 'dynatable-query-search-' + obj.element.id,
             'data-dynatable-query': 'search',
-            value: settings.dataset.queries.search
+            value: settings.dataset.queries.search,
+            placeholder: 'Search'
           }),
           $searchSpan = $('<span></span>', {
             id: 'dynatable-search-' + obj.element.id,
             'class': 'dynatable-search',
-            text: 'Search: '
           }).append($search);
 
       $search
