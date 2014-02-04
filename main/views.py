@@ -69,7 +69,7 @@ def add_library_song(request):
 @login_required
 def delete_library_song(request):
     if request.method == 'POST':
-        song_id = int(request.POST["songid"][0])
+        song_id = int(request.POST["songid"])
         user_playlist = Playlist.objects.get(user = request.user, is_requests=False)
         if user_playlist.songs.all().filter(pk=song_id).exists():
             song = user_playlist.songs.all().get(pk=song_id)
@@ -82,7 +82,7 @@ def delete_library_song(request):
 @login_required
 def delete_request_song(request):
     if request.method == 'POST':
-        song_id = int(request.POST["songid"][0])
+        song_id = int(request.POST["songid"])
         user_playlist = Playlist.objects.get(user = request.user, is_requests=True)
         if user_playlist.songs.all().filter(pk=song_id).exists():
             song = user_playlist.songs.all().get(pk=song_id)
@@ -94,12 +94,12 @@ def delete_request_song(request):
 
 @login_required
 def get_request_playlist(request):
-     request_playlist = Playlist.objects.get(user=request.user, is_requests=True)
-     response_data = request_playlist.as_dict()
-     return HttpResponse(json.dumps(response_data), content_type="application/json")
+    request_playlist = Playlist.objects.get(user=request.user, is_requests=True)
+    response_data = request_playlist.as_dict()
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
 
 @login_required
 def get_library_playlist(request):
-     library_playlist = Playlist.objects.get(user=request.user, is_requests=False)
-     response_data = library_playlist.as_dict()
-     return HttpResponse(json.dumps(response_data), content_type="application/json")
+    library_playlist = Playlist.objects.get(user=request.user, is_requests=False)
+    response_data = library_playlist.as_dict()
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

@@ -32,7 +32,7 @@ class Song(models.Model):
         }
 
     def __str__(self):
-        return self.title
+        return self.title + " | id: " + str(self.id)
 
 class Playlist(models.Model):
     songs = SortedManyToManyField(Song, sort_value_field_name = "time_requested")

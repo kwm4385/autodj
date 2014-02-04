@@ -66,7 +66,8 @@ function validateSongurl() {
 /* 
 Refreshes the library table.
 */
-function refreshLibrary() {
+function refreshLibrary(data) {
+    console.log(data);
     $('#library-table').html('<br/><br/><div class="row">' +
         '<div class="col-lg-4 col-lg-offset-4"><div class="progress progress-striped active">' +
         '<div class="progress-bar progress-bar-info" style="width: 100%"></div></div></div></div>');
@@ -75,6 +76,7 @@ function refreshLibrary() {
       success: function(data) {
         $('#library-table').hide().html("<br/>" + data).fadeIn();
         $('#libraryTable').dynatable();
+        $('#libraryTable').tableScroll({height:550});
         $("#dynatable-query-search-libraryTable").addClass("form-control");
       }
     });
@@ -203,6 +205,7 @@ function queueNextSong() {
         console.log("playing library");
         nextURL = pickLibrarySong();
     }
+
     player = Popcorn.smart(
                '#musicplayer',
                nextURL + '&controls=0');
@@ -231,14 +234,18 @@ function queueNextSong() {
         player.volume(ev.value / 100);
     });
 
-    $('#videothumb').html('<img src="http://img.youtube.com/vi/' + getparam(nextURL, "v") + '/0.jpg" height="140" width="180"/>');
-    unpauseSong();
-    // $("#videocontainer").hide();
+    if(songQueued) {
+         $('#videothumb').html('<img src="http://img.youtube.com/vi/' + getparam(nextURL, "v") + '/0.jpg" height="140" width="180"/>');
+        unpauseSong();
+    }
+   
+    if(!songQueued) $("#videocontainer").hide();
 }
 
 /*
 Chooses and random song from the user's library and returns the url.
 */
+var songQueued = false;
 function pickLibrarySong() {
     $("#loader").show();
     var url;
@@ -247,8 +254,13 @@ function pickLibrarySong() {
         type: 'GET',
         async: false,
         success: function(data) {
-            rand = Math.floor(Math.random() * data.songs.length);
-            url = data.songs[rand].url;
+            if(data.songs.length > 0) {
+                rand = Math.floor(Math.random() * data.songs.length);
+                url = data.songs[rand].url;
+                songQueued = true;
+            } else {
+                songQueued = false;
+            }
             $("#loader").fadeOut();
         }
     });
