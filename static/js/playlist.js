@@ -67,7 +67,6 @@ function validateSongurl() {
 Refreshes the library table.
 */
 function refreshLibrary(data) {
-    console.log(data);
     $('#library-table').html('<br/><br/><div class="row">' +
         '<div class="col-lg-4 col-lg-offset-4"><div class="progress progress-striped active">' +
         '<div class="progress-bar progress-bar-info" style="width: 100%"></div></div></div></div>');
@@ -178,7 +177,7 @@ function addRequestTableRow(id, index, title, duration, link) {
         $("#norequests").hide();
         $("#requestTable tbody").append(
         "<tr id=\"sr" + id + "\">" +
-        "<td>" + index + "</td>" +
+        //"<td>" + index + "</td>" +
         "<td>" + title + "</td>" +
         "<td>" + duration + "</td>" +
         "<td></td>" +
@@ -194,18 +193,23 @@ function addRequestTableRow(id, index, title, duration, link) {
 Queues the next song from either requests or the user's library.
 */
 var player;
+var playingLibrary;
+var playingId;
 function queueNextSong() {
     var nextURL;
     nextRequest = $('#requestTable tbody').find("tr:first");
-    nextURL = "https://www.youtube.com/watch?v=ZlTAFkubtSM";
     if(nextRequest.length) {
+        playingId = nextRequest.attr('id').substring(2);
         console.log("playing requests");
+        playingLibrary = false;
         nextURL = nextRequest.children(".songlink").children("a").attr("href");
+        songQueued = true;
     } else {
         console.log("playing library");
+        playingLibrary = true;
         nextURL = pickLibrarySong();
     }
-
+    
     player = Popcorn.smart(
                '#musicplayer',
                nextURL + '&controls=0');
@@ -257,6 +261,7 @@ function pickLibrarySong() {
             if(data.songs.length > 0) {
                 rand = Math.floor(Math.random() * data.songs.length);
                 url = data.songs[rand].url;
+                playingId = data.songs[rand].id;
                 songQueued = true;
             } else {
                 songQueued = false;
